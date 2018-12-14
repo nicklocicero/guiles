@@ -19,29 +19,21 @@ import com.nicholaslocicero.guiles.guilesfitnesstracker.model.DB.Workout_DB;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Exercise;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.WorkoutPojo;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WorkoutFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
-public class WorkoutFragment extends Fragment {
+public class EditWorkoutFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private static final String TAG = "EditScoutFragment";
+    private static final String TAG = "ScoutFragment";
 
     private View view;
-    private WorkoutViewAdapter adapter;
+    private EditWorkoutViewAdapter adapter;
     private RecyclerView recyclerView;
     private WorkoutPojo workoutPojo;
     private Button editButton;
 
-    public WorkoutFragment() {
+    public EditWorkoutFragment() {
         // Required empty public constructor
     }
 
@@ -59,17 +51,17 @@ public class WorkoutFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         editButton = view.findViewById(R.id.edit_workout_button);
-        editButton.setText("Edit");
+        editButton.setText("Save");
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchFragment(new EditWorkoutFragment(), true, "");
+                new SaveCurrentWorkout().execute(adapter.getExercises());
             }
         });
         new GetWorkoutPojo().execute();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    // Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -94,7 +86,7 @@ public class WorkoutFragment extends Fragment {
     }
 
     private void initRecycler() {
-        adapter = new WorkoutViewAdapter(workoutPojo.getExercises(), getContext(), getFragmentManager());
+        adapter = new EditWorkoutViewAdapter(workoutPojo.getExercises(), getContext(), getFragmentManager());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -114,6 +106,16 @@ public class WorkoutFragment extends Fragment {
         //  ((MainActivity) getActivity()).updateData();
     }
 
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        new SaveCurrentWorkout().execute(adapter.getExercises());
+//    }
+
+    //    @Override
+//    public void onPause() {
+//        super.onPause();
+//    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -125,17 +127,17 @@ public class WorkoutFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        // Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
-    // TODO make static to prevent memory leaks
-        // https://stackoverflow.com/questions/44309241/warning-this-asynctask-class-should-be-static-or-leaks-might-occur
+    // make static to prevent memory leaks
+    // https://stackoverflow.com/questions/44309241/warning-this-asynctask-class-should-be-static-or-leaks-might-occur
     private class GetWorkoutPojo extends AsyncTask<Void, Void, WorkoutPojo> {
 
         @Override
         protected void onPostExecute(WorkoutPojo workoutPojo) {
-            WorkoutFragment.this.workoutPojo = workoutPojo;
+            EditWorkoutFragment.this.workoutPojo = workoutPojo;
             initRecycler();
         }
 
@@ -145,4 +147,19 @@ public class WorkoutFragment extends Fragment {
         }
 
     }
+
+    private class SaveCurrentWorkout extends AsyncTask<List<Exercise>, Void, Void> {
+
+        @Override
+        protected Void doInBackground(List<Exercise>... exercises) {
+            Workout_DB.getInstance(getContext()).getExerciseDao().update(exercises[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            switchFragment(new WorkoutFragment(), true, "");
+        }
+    }
 }
+

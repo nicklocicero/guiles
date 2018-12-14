@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Exercise;
 
@@ -20,6 +21,9 @@ public interface ExerciseDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     List<Long> insert(List<Exercise> exercises);
+
+    @Update
+    int update(List<Exercise> exercises);
 
     @Query("SELECT * FROM exercises WHERE workoutId = :workoutid")
     List<Exercise> getCurrentWorkout(Long workoutid);

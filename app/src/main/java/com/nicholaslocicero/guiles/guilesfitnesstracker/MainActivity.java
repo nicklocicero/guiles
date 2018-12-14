@@ -24,7 +24,8 @@ import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.WorkoutPo
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        WorkoutFragment.OnFragmentInteractionListener {
+        WorkoutFragment.OnFragmentInteractionListener,
+        EditWorkoutFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            // TODO save workout
             return true;
         }
 
@@ -91,7 +93,14 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        // TODO set up nav drawer
+        // TODO new Fragment for old workouts with view and edit
+        // TODO cardio, too
+        // TODO export CSV
+        // TODO Play store
+        // TODO Google cloud
+        // TODO Add fitbit
+        // TODO Google Cloud Professional Cloud Developer
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {

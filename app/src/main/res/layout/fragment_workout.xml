@@ -83,7 +83,7 @@
         android:layout_height="0dp"
         android:scrollbars="vertical"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/edit_workout"
+        app:layout_constraintBottom_toTopOf="@id/edit_workout_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headers"
@@ -91,11 +91,10 @@
         tools:layout_editor_absoluteY="8dp"/>
 
     <Button
-        android:id="@+id/edit_workout"
+        android:id="@+id/edit_workout_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_back"
-        android:text="Edit"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
