@@ -33,7 +33,7 @@ public class WorkoutFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private static final String TAG = "EditScoutFragment";
+    private static final String TAG = "WorkoutFragment";
 
     private View view;
     private WorkoutViewAdapter adapter;
@@ -69,7 +69,7 @@ public class WorkoutFragment extends Fragment {
         new GetWorkoutPojo().execute();
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    // Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -125,11 +125,11 @@ public class WorkoutFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        // TUpdate argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
-    // TODO make static to prevent memory leaks
+    // make static to prevent memory leaks
         // https://stackoverflow.com/questions/44309241/warning-this-asynctask-class-should-be-static-or-leaks-might-occur
     private class GetWorkoutPojo extends AsyncTask<Void, Void, WorkoutPojo> {
 
@@ -144,5 +144,9 @@ public class WorkoutFragment extends Fragment {
             return Workout_DB.getInstance(getContext()).getWorkoutPojoDao().getWorkoutPojo();
         }
 
+    }
+
+    public List<Exercise> getWorkout() {
+        return adapter.getExercises();
     }
 }

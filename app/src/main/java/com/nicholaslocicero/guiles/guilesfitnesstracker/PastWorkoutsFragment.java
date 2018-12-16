@@ -13,28 +13,36 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.DB.Workout_DB;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Exercise;
+import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Workout;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.WorkoutPojo;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
-public class EditWorkoutFragment extends Fragment {
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link WorkoutFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ */
+public class PastWorkoutsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private static final String TAG = "EditWorkoutFragment";
+    private static final String TAG = "PastWorkoutsFragment";
 
     private View view;
-    private EditWorkoutViewAdapter adapter;
+    private PastWorkoutViewAdapter adapter;
     private RecyclerView recyclerView;
-    private WorkoutPojo workoutPojo;
-    private Button editButton;
+    private List<WorkoutPojo> allWorkouts;
 
-    public EditWorkoutFragment() {
+    public PastWorkoutsFragment() {
         // Required empty public constructor
     }
 
@@ -43,28 +51,15 @@ public class EditWorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_workout, container, false);
-        recyclerView = view.findViewById(R.id.exercises_recycler_view);
+        view =  inflater.inflate(R.layout.fragment_past_workout, container, false);
+        recyclerView = view.findViewById(R.id.workouts_recycler_view);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        editButton = view.findViewById(R.id.edit_workout_button);
-        editButton.setText("Save");
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View view = getActivity().getCurrentFocus();
-                if (view != null) {
-                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                }
-                new SaveCurrentWorkout().execute(adapter.getExercises());
-            }
-        });
-        new GetWorkoutPojo().execute();
+        new GetAllWorkoutPojos().execute();
     }
 
     // Rename method, update argument and hook method into UI event
@@ -92,7 +87,7 @@ public class EditWorkoutFragment extends Fragment {
     }
 
     private void initRecycler() {
-        adapter = new EditWorkoutViewAdapter(workoutPojo.getExercises(), getContext(), getFragmentManager());
+        adapter = new PastWorkoutViewAdapter(allWorkouts, getContext(), getFragmentManager());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -112,16 +107,6 @@ public class EditWorkoutFragment extends Fragment {
         //  ((MainActivity) getActivity()).updateData();
     }
 
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        new SaveCurrentWorkout().execute(adapter.getExercises());
-//    }
-
-    //    @Override
-//    public void onPause() {
-//        super.onPause();
-//    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -133,39 +118,24 @@ public class EditWorkoutFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // Update argument type and name
+        // TUpdate argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
     // make static to prevent memory leaks
     // https://stackoverflow.com/questions/44309241/warning-this-asynctask-class-should-be-static-or-leaks-might-occur
-    private class GetWorkoutPojo extends AsyncTask<Void, Void, WorkoutPojo> {
+    private class GetAllWorkoutPojos extends AsyncTask<Void, Void, List<WorkoutPojo>> {
 
         @Override
-        protected void onPostExecute(WorkoutPojo workoutPojo) {
-            EditWorkoutFragment.this.workoutPojo = workoutPojo;
+        protected void onPostExecute(List<WorkoutPojo> workouts) {
+            PastWorkoutsFragment.this.allWorkouts = new ArrayList<>(workouts);
             initRecycler();
         }
 
         @Override
-        protected WorkoutPojo doInBackground(Void... voids) {
-            return Workout_DB.getInstance(getContext()).getWorkoutPojoDao().getWorkoutPojo();
+        protected List<WorkoutPojo> doInBackground(Void... voids) {
+            return Workout_DB.getInstance(getContext()).getWorkoutPojoDao().getAllWorkoutPojos();
         }
 
-    }
-
-    private class SaveCurrentWorkout extends AsyncTask<List<Exercise>, Void, Void> {
-
-        @Override
-        protected Void doInBackground(List<Exercise>... exercises) {
-            Workout_DB.getInstance(getContext()).getExerciseDao().update(exercises[0]);
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            switchFragment(new WorkoutFragment(), true, "");
-        }
     }
 }
-

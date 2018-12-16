@@ -90,4 +90,7 @@ public class WorkoutViewAdapter extends RecyclerView.Adapter<WorkoutViewAdapter.
         }
     }
 
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
 }

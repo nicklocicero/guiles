@@ -27,4 +27,5 @@ public class WorkoutPojo {
     public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
     }
+
 }

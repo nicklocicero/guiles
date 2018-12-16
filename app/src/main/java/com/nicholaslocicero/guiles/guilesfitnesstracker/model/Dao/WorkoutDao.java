@@ -21,6 +21,8 @@ public abstract interface WorkoutDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     List<Long> insert(List<Workout> workouts);
 
+    @Query("SELECT * FROM workouts")
+    List<Workout> getAllWorkouts();
 //    @Update(onConflict = OnConflictStrategy.REPLACE)
 //    int update(Workout workout);
 //
