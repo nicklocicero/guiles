@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.WorkoutPojo;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 /**
@@ -86,15 +89,42 @@ public class PastWorkoutViewAdapter extends RecyclerView.Adapter<PastWorkoutView
             int c = 0;
             for (int i = 0; i < workoutPojo.getExercises().size(); i++) {
                 // add all exercise stats
-                TextView exerciseNameText = new TextView(context);
                 String workoutName = workoutPojo.getExercises().get(i).getWorkoutName();
                 if (!workoutName.equals("")) {
-                    exerciseNameText.setText(workoutName);
-                    exerciseNameText.setTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
                     if (c % 2 == 0) {
-                        firstColumn.addView(exerciseNameText);
+                        LinearLayout workout = (LinearLayout) LayoutInflater.from(context)
+                                .inflate(R.layout.exercise_text_row, firstColumn, false);
+                        workout.setPadding(2,1,1,2);
+                        TextView name = workout.findViewById(R.id.exercise_name);
+                        TextView reps = workout.findViewById(R.id.exercise_reps);
+                        TextView sets = workout.findViewById(R.id.exercise_sets);
+                        TextView weight = workout.findViewById(R.id.exercise_weight);
+                        name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+                        reps.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+                        sets.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+                        weight.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+                        name.setText(workoutName);
+                        sets.setText(workoutPojo.getExercises().get(i).getSets() == null ? "" : Integer.toString(workoutPojo.getExercises().get(i).getSets()));
+                        reps.setText(workoutPojo.getExercises().get(i).getReps() == null ? "" : Integer.toString(workoutPojo.getExercises().get(i).getReps()));
+                        weight.setText(workoutPojo.getExercises().get(i).getWeight() == null ? "" : Integer.toString(workoutPojo.getExercises().get(i).getWeight()));
+                        firstColumn.addView(workout);
                     } else {
-                        secondColumn.addView(exerciseNameText);
+                        LinearLayout workout = (LinearLayout) LayoutInflater.from(context)
+                                .inflate(R.layout.exercise_text_row, secondColumn, false);
+                        workout.setPadding(2,1,1,2);
+                        TextView name = workout.findViewById(R.id.exercise_name);
+                        TextView reps = workout.findViewById(R.id.exercise_reps);
+                        TextView sets = workout.findViewById(R.id.exercise_sets);
+                        TextView weight = workout.findViewById(R.id.exercise_weight);
+                        name.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+                        reps.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+                        sets.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+                        weight.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
+                        name.setText(workoutName);
+                        sets.setText(workoutPojo.getExercises().get(i).getSets() == null ? "" : Integer.toString(workoutPojo.getExercises().get(i).getSets()));
+                        reps.setText(workoutPojo.getExercises().get(i).getReps() == null ? "" : Integer.toString(workoutPojo.getExercises().get(i).getReps()));
+                        weight.setText(workoutPojo.getExercises().get(i).getWeight() == null ? "" : Integer.toString(workoutPojo.getExercises().get(i).getWeight()));
+                        secondColumn.addView(workout);
                     }
                     c++;
                 }
