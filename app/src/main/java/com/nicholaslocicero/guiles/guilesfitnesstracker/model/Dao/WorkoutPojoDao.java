@@ -18,6 +18,9 @@ public interface WorkoutPojoDao {
     @Query("SELECT * FROM workouts WHERE selected = 1")
     WorkoutPojo getWorkoutPojo();
 
+    @Query("SELECT * FROM workouts WHERE id = :id")
+    WorkoutPojo getSelectedWorkoutPojo(Long id);
+
 //    @Insert(onConflict = OnConflictStrategy.IGNORE)
 //    Long insert(WorkoutPojo workoutPojo);
     @Query("SELECT * FROM workouts WHERE id =:id")

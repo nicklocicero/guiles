@@ -1,8 +1,10 @@
 package com.nicholaslocicero.guiles.guilesfitnesstracker;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
@@ -30,9 +32,9 @@ public class PastWorkoutViewAdapter extends RecyclerView.Adapter<PastWorkoutView
     private FragmentManager manager;
 
     public PastWorkoutViewAdapter(List<WorkoutPojo> workouts, Context context,FragmentManager manager) {
-        this.manager = manager;
         this.workouts = workouts;
         this.context = context;
+        this.manager = manager;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -80,7 +82,15 @@ public class PastWorkoutViewAdapter extends RecyclerView.Adapter<PastWorkoutView
 
         @Override
         public void onClick(View v) {
-            new Toast(context).makeText(context, "THIS", Toast.LENGTH_LONG).show();
+            EditPastWorkoutFragment workoutFragment = new EditPastWorkoutFragment();
+            Bundle bundle = new Bundle();
+            bundle.putLong("id", workoutPojo.getWorkout().getId());
+            workoutFragment.setArguments(bundle);
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+            transaction.replace(R.id.fragment_container, workoutFragment)
+                    .addToBackStack(null)
+                    .commit();
         }
 
         public void bind(WorkoutPojo workoutPojo) {

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Dao.CardioWorkoutDao;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Dao.ExerciseDao;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Dao.WorkoutDao;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Dao.WorkoutPojoDao;
@@ -41,6 +42,7 @@ public abstract class Workout_DB extends RoomDatabase {
     public abstract ExerciseDao getExerciseDao();
     public abstract WorkoutDao getWorkoutDao();
     public abstract WorkoutPojoDao getWorkoutPojoDao();
+    public abstract CardioWorkoutDao getCardioWorkoutDao();
 
     public static void forgetInstance(Context context) {
         instance = null;

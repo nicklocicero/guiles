@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.nicholaslocicero.guiles.guilesfitnesstracker.MainActivity">
+    <Button
+        android:id="@+id/change_date_workout_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_back"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        app:fontFamily="sans-serif"
+        android:text="change date"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/headers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/change_date_workout_button">
+
+        <TextView
+            android:id="@+id/workout_column"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_weight=".5"
+            android:background="@drawable/header_back"
+            android:gravity="center"
+            android:text="Workout Name"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif"
+            app:layout_constraintEnd_toStartOf="@+id/sets_column"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/sets_column"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_weight=".15"
+            android:background="@drawable/header_back"
+            android:gravity="center"
+            android:text="Sets"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif"
+            app:layout_constraintEnd_toStartOf="@+id/reps_column"
+            app:layout_constraintStart_toEndOf="@id/workout_column"
+            app:layout_constraintTop_toTopOf="@id/change_date_workout_button" />
+
+        <TextView
+            android:id="@+id/reps_column"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_column="3"
+            android:layout_weight=".15"
+            android:background="@drawable/header_back"
+            android:gravity="center"
+            android:text="Reps"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif"
+            app:layout_constraintEnd_toStartOf="@+id/weight_column"
+            app:layout_constraintStart_toEndOf="@id/sets_column"
+            app:layout_constraintTop_toTopOf="@id/change_date_workout_button" />
+
+        <TextView
+            android:id="@+id/weight_column"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_column="4"
+            android:layout_weight=".2"
+            android:background="@drawable/header_back"
+            android:gravity="center"
+            android:text="Lbs"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            app:fontFamily="sans-serif"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/reps_column"
+            app:layout_constraintTop_toTopOf="@id/change_date_workout_button" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/exercises_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/save_past_workout_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headers"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"/>
+
+    <Button
+        android:id="@+id/save_past_workout_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_back"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="18sp"
+        app:fontFamily="sans-serif"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

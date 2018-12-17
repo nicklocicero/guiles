@@ -22,7 +22,6 @@ import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Dao.WorkoutDao;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Dao.WorkoutPojoDao;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Exercise;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Workout;
-import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.WorkoutPojo;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +33,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         WorkoutFragment.OnFragmentInteractionListener,
         EditWorkoutFragment.OnFragmentInteractionListener,
-        PastWorkoutsFragment.OnFragmentInteractionListener {
+        PastWorkoutsFragment.OnFragmentInteractionListener,
+        EditPastWorkoutFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +106,6 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // TODO set up nav drawer
-        // TODO new Fragment for old workouts with view and edit
         // TODO cardio, too
         // TODO export CSV
         // TODO Play store
@@ -116,17 +114,11 @@ public class MainActivity extends AppCompatActivity
         // TODO Google Cloud Professional Cloud Developer
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.current_workout) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new WorkoutFragment()).commit();
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.past_workouts) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PastWorkoutsFragment()).commit();
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.activity_log) {
 
         }
 

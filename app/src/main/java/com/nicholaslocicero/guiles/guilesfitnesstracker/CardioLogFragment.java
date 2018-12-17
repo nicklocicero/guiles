@@ -16,32 +16,25 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.DB.Workout_DB;
+import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.CardioWorkout;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Exercise;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.WorkoutPojo;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WorkoutFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- */
-public class WorkoutFragment extends Fragment {
+public class CardioLogFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private static final String TAG = "WorkoutFragment";
+    private static final String TAG = "CardioLogFragment";
 
     private View view;
-    private WorkoutViewAdapter adapter;
+    private CardioLogViewAdapter adapter;
     private RecyclerView recyclerView;
-    private WorkoutPojo workoutPojo;
+    private List<CardioWorkout> cardioWorkouts;
     private Button editButton;
 
-    public WorkoutFragment() {
+    public CardioLogFragment() {
         // Required empty public constructor
     }
 
@@ -50,7 +43,7 @@ public class WorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_workout, container, false);
+        view =  inflater.inflate(R.layout.fragment_cardio_log, container, false);
         recyclerView = view.findViewById(R.id.exercises_recycler_view);
         return view;
     }
@@ -58,8 +51,7 @@ public class WorkoutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        editButton = view.findViewById(R.id.edit_workout_button);
-        editButton.setText("Edit");
+        editButton = view.findViewById(R.id.edit_cardio_log_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +66,7 @@ public class WorkoutFragment extends Fragment {
                         .commit();
             }
         });
-        new GetWorkoutPojo().execute();
+        new GetCardioWorkouts().execute();
     }
 
     // Rename method, update argument and hook method into UI event
@@ -102,7 +94,7 @@ public class WorkoutFragment extends Fragment {
     }
 
     private void initRecycler() {
-        adapter = new WorkoutViewAdapter(workoutPojo.getExercises(), getContext(), getFragmentManager());
+        adapter = new CardioLogViewAdapter(cardioWorkouts, getContext(), getFragmentManager());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -138,23 +130,19 @@ public class WorkoutFragment extends Fragment {
     }
 
     // make static to prevent memory leaks
-        // https://stackoverflow.com/questions/44309241/warning-this-asynctask-class-should-be-static-or-leaks-might-occur
-    private class GetWorkoutPojo extends AsyncTask<Void, Void, WorkoutPojo> {
+    // https://stackoverflow.com/questions/44309241/warning-this-asynctask-class-should-be-static-or-leaks-might-occur
+    private class GetCardioWorkouts extends AsyncTask<Void, Void, List<CardioWorkout>> {
 
         @Override
-        protected void onPostExecute(WorkoutPojo workoutPojo) {
-            WorkoutFragment.this.workoutPojo = workoutPojo;
+        protected void onPostExecute(List<CardioWorkout> cardioWorkouts) {
+            CardioLogFragment.this.cardioWorkouts = cardioWorkouts;
             initRecycler();
         }
 
         @Override
-        protected WorkoutPojo doInBackground(Void... voids) {
-            return Workout_DB.getInstance(getContext()).getWorkoutPojoDao().getWorkoutPojo();
+        protected List<CardioWorkout> doInBackground(Void... voids) {
+            return Workout_DB.getInstance(getContext()).getCardioWorkoutDao().getCardioWorkouts();
         }
 
-    }
-
-    public List<Exercise> getWorkout() {
-        return adapter.getExercises();
     }
 }
