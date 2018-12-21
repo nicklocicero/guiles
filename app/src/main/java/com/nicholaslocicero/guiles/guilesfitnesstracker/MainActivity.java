@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity
         WorkoutFragment.OnFragmentInteractionListener,
         EditWorkoutFragment.OnFragmentInteractionListener,
         PastWorkoutsFragment.OnFragmentInteractionListener,
-        EditPastWorkoutFragment.OnFragmentInteractionListener {
+        EditPastWorkoutFragment.OnFragmentInteractionListener,
+        CardioLogFragment.OnFragmentInteractionListener,
+        EditCardioLogFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.past_workouts) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PastWorkoutsFragment()).commit();
         } else if (id == R.id.activity_log) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CardioLogFragment()).commit();
 
         }
 

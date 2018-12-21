@@ -8,12 +8,12 @@
     tools:context="com.nicholaslocicero.guiles.guilesfitnesstracker.MainActivity">
 
     <LinearLayout
-        android:id="@+id/headers_cardio_log"
+        android:id="@+id/headers_cardio_log_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/workout_column"
+            android:id="@+id/workout_column_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/sets_column"
+            android:id="@+id/sets_column_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".15"
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/reps_column"
+            android:id="@+id/reps_column_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".15"
@@ -58,7 +58,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/weight_column"
+            android:id="@+id/weight_column_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".4"
@@ -74,27 +74,27 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/cardio_log_recycler_view"
+        android:id="@+id/cardio_log_edit_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:scrollbars="vertical"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/edit_cardio_log_button"
+        app:layout_constraintBottom_toTopOf="@id/save_cardio_log_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/headers_cardio_log"
+        app:layout_constraintTop_toBottomOf="@id/headers_cardio_log_edit"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"/>
 
     <Button
-        android:id="@+id/edit_cardio_log_button"
+        android:id="@+id/save_cardio_log_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_back"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="18sp"
-        android:text="Edit"
+        android:text="Save"
         app:fontFamily="sans-serif"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

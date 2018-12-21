@@ -193,7 +193,7 @@ public class EditPastWorkoutFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            getActivity().onBackPressed();;
+            getActivity().onBackPressed();
         }
     }
 }

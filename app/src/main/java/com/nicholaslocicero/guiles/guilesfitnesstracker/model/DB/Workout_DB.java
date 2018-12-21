@@ -14,13 +14,14 @@ import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Dao.CardioWorkoutD
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Dao.ExerciseDao;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Dao.WorkoutDao;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Dao.WorkoutPojoDao;
+import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.CardioWorkout;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Exercise;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Workout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Database(entities = {Exercise.class, Workout.class},
+@Database(entities = {Exercise.class, Workout.class, CardioWorkout.class},
         version = 1,
         exportSchema = true)
 @TypeConverters({Converters.class})
@@ -83,6 +84,7 @@ public abstract class Workout_DB extends RoomDatabase {
 
             WorkoutDao workoutDao = db.getWorkoutDao();
             ExerciseDao exerciseDao = db.getExerciseDao();
+            CardioWorkoutDao cardioWorkoutDao = db.getCardioWorkoutDao();
 
             Workout workout = new Workout();
             Long id = workoutDao.insert(workout);
@@ -96,6 +98,16 @@ public abstract class Workout_DB extends RoomDatabase {
             }
 
             exerciseDao.insert(exercises);
+
+            // Monthly calender for the Cardio? Hmm...
+            List<CardioWorkout> cardioWorkouts = new ArrayList<>();
+
+            for (int i =  0; i < 30; i++) {
+                CardioWorkout cardioWorkout = new CardioWorkout();
+                cardioWorkouts.add(cardioWorkout);
+            }
+
+            cardioWorkoutDao.insert(cardioWorkouts);
 
             forgetInstance(contexts[0]);
             return null;

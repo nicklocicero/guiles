@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.CardioWorkout;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Exercise;
 
+import java.text.DateFormat;
 import java.util.List;
 
 public class CardioLogViewAdapter extends RecyclerView.Adapter<CardioLogViewAdapter.ViewHolder>{
@@ -76,7 +77,7 @@ public class CardioLogViewAdapter extends RecyclerView.Adapter<CardioLogViewAdap
 
         public void bind(CardioWorkout cardioWorkout) {
             this.cardioWorkout = cardioWorkout;
-            date.setText(cardioWorkout.getDate().toString());
+            date.setText(cardioWorkout.getDate() == null ? "" : android.text.format.DateFormat.format("MM/dd/yy", cardioWorkout.getDate()));
             time.setText(cardioWorkout.getMinutes() == null ? "" : Float.toString(cardioWorkout.getMinutes()));
             distance.setText(cardioWorkout.getMiles() == null ? "" : Float.toString(cardioWorkout.getMinutes()));
             route.setText(cardioWorkout.getRoute() == null ? "" : cardioWorkout.getRoute());

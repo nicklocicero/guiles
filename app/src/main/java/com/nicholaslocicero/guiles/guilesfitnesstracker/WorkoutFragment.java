@@ -149,6 +149,7 @@ public class WorkoutFragment extends Fragment {
 
         @Override
         protected WorkoutPojo doInBackground(Void... voids) {
+            // TODO fix this from returning null on first opening after install
             return Workout_DB.getInstance(getContext()).getWorkoutPojoDao().getWorkoutPojo();
         }
 

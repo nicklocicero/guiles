@@ -34,11 +34,11 @@ public class CardioWorkout {
         this.route = route;
     }
 
-    public Integer getMinutes() {
+    public Float getMinutes() {
         return minutes;
     }
 
-    public void setMinutes(Integer minutes) {
+    public void setMinutes(Float minutes) {
         this.minutes = minutes;
     }
 

@@ -17,24 +17,22 @@ import android.widget.Button;
 
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.DB.Workout_DB;
 import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.CardioWorkout;
-import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.Exercise;
-import com.nicholaslocicero.guiles.guilesfitnesstracker.model.Entities.WorkoutPojo;
 
 import java.util.List;
 
-public class CardioLogFragment extends Fragment {
+public class EditCardioLogFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private static final String TAG = "CardioLogFragment";
+    private static final String TAG = "EditCardioLogFragment";
 
     private View view;
-    private CardioLogViewAdapter adapter;
+    private EditCardioLogViewAdapter adapter;
     private RecyclerView recyclerView;
     private List<CardioWorkout> cardioWorkouts;
     private Button editButton;
 
-    public CardioLogFragment() {
+    public EditCardioLogFragment() {
         // Required empty public constructor
     }
 
@@ -43,24 +41,19 @@ public class CardioLogFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_cardio_log, container, false);
-        recyclerView = view.findViewById(R.id.cardio_log_recycler_view);
+        view =  inflater.inflate(R.layout.fragment_edit_cardio_log, container, false);
+        recyclerView = view.findViewById(R.id.cardio_log_edit_recycler_view);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        editButton = view.findViewById(R.id.edit_cardio_log_button);
+        editButton = view.findViewById(R.id.save_cardio_log_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditCardioLogFragment editCardioLogFragment = new EditCardioLogFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
-                transaction.replace(R.id.fragment_container, editCardioLogFragment)
-                        .addToBackStack(null)
-                        .commit();
+                new SaveCardioLog().execute(adapter.getCardioWorkouts());
             }
         });
         new GetCardioWorkouts().execute();
@@ -91,7 +84,7 @@ public class CardioLogFragment extends Fragment {
     }
 
     private void initRecycler() {
-        adapter = new CardioLogViewAdapter(cardioWorkouts, getContext(), getFragmentManager());
+        adapter = new EditCardioLogViewAdapter(cardioWorkouts, getContext(), getFragmentManager());
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -132,7 +125,7 @@ public class CardioLogFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<CardioWorkout> cardioWorkouts) {
-            CardioLogFragment.this.cardioWorkouts = cardioWorkouts;
+            EditCardioLogFragment.this.cardioWorkouts = cardioWorkouts;
             initRecycler();
         }
 
@@ -141,5 +134,20 @@ public class CardioLogFragment extends Fragment {
             return Workout_DB.getInstance(getContext()).getCardioWorkoutDao().getCardioWorkouts();
         }
 
+    }
+
+    private class SaveCardioLog extends AsyncTask<List<CardioWorkout>, Void, Void> {
+
+        @Override
+        protected Void doInBackground(List<CardioWorkout>... lists) {
+            Workout_DB.getInstance(getContext()).getCardioWorkoutDao().updateAll(lists[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            getActivity().onBackPressed();
+        }
     }
 }
